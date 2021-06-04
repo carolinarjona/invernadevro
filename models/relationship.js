@@ -1,19 +1,19 @@
 const dbInvernadevro = require("../config/dbInvernadevro");
 const User = require("../models/User");
 const Plant = require("../models/Plant");
-const UserPlant = require("../models/UserPlant");
+const Plantpot = require("../models/Plantpot");
 
 const loadModels = () => {
   User.belongsToMany(Plant, {
-    through: UserPlant,
+    through: Plantpot,
     foreignKey: "userId",
   }),
     Plant.belongsToMany(User, {
-      through: UserPlant,
+      through: Plantpot,
       foreignKey: "plantId",
     });
 
-  dbInvernadevro.sync().then(() => console.log("All models loaded"));
+  dbInvernadevro.sync().then(() => console.log("🌻 Everything is ok! 🌻"));
 };
 
 module.exports = loadModels;

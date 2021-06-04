@@ -24,3 +24,10 @@ exports.WATERING_FREQUENCY = Object.freeze({
   ONCE_A_WEEK: "once a week",
   BIWEEKLY: "biweekly",
 });
+
+exports.STATUS = Object.freeze({
+  ALIVE: "alive",
+  WILTED: "wilted",
+  DORMANT: "dormant",
+  DEAD: "dead",
+});
