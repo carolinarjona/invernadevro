@@ -5,8 +5,8 @@ exports.getAllPlants = async () => {
   return plants;
 };
 
-exports.getPlant = async (id) => {
-  const plant = await plantRepository.findPlantById(id);
+exports.getPlant = async (plantId) => {
+  const plant = await plantRepository.findPlantById(plantId);
   return plant.toJSON();
 };
 
@@ -18,10 +18,9 @@ exports.createPlant = async (plant) => {
 };
 
 exports.editPlant = async (plantId, plantDetails) => {
-  const plant = await plantRepository.findPlantById(plantId);
-  await plantRepository.updatePlant(plant, plantDetails);
+  await plantRepository.updatePlant(plantDetails, { where: { plantId } });
 };
 
-exports.deletePlant = async (id) => {
-  await plantRepository.deletePlant(id);
+exports.deletePlant = async (plantId) => {
+  await plantRepository.deletePlant(plantId);
 };

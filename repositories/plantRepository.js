@@ -8,14 +8,14 @@ exports.findAllPlants = async () => {
   return await Plant.findAll();
 };
 
-exports.findPlantById = async (id) => {
-  return await Plant.findByPk(id);
+exports.findPlantById = async (plantId) => {
+  return await Plant.findByPk(plantId);
 };
 
-exports.updatePlant = async (id, plantDetails) => {
-  return await Plant.update(plantDetails, { where: { id } });
+exports.updatePlant = async (plantId, plantDetails) => {
+  return await Plant.update(plantId, plantDetails);
 };
 
-exports.deletePlant = async (id) => {
-  return await Plant.destroy({ where: { id } });
+exports.deletePlant = async (plantId) => {
+  return await Plant.destroy({ where: { plantId } });
 };

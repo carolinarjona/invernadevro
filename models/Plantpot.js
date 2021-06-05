@@ -3,7 +3,7 @@ const dbInvernadevro = require("../config/dbInvernadevro");
 const { STATUS } = require("../util/constants");
 
 const Planpot = dbInvernadevro.define("Planpot", {
-  planpotId: {
+  plantpotId: {
     primaryKey: true,
     allowNull: false,
     type: DataTypes.UUID,

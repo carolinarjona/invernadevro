@@ -1,22 +1,31 @@
 const plantpotRepository = require("../repositories/plantpotRepository");
 
-exports.createPlantpot = async (user, plant, plantpot) => {
-  if (!plantpot.name) throw new Error();
-  plantpot.UserId = user.id;
-  plantpot.PlantId = plant.id;
+exports.getAllPlantpots = async () => {
+  return await plantpotRepository.getAllPlantpots();
+};
+
+exports.getPlantpotById = async (id) => {
+  return await plantpotRepository.getPlantpotById(id);
+};
+
+exports.createPlantpot = async (plantpot) => {
+  console.log(plantpot);
+  // (plantpot, {userId, plantId, ...plantpot}) = plantpot;
+  // plantpot.userId = userId;
+  // plantpot.plantId = plantId;
   await plantpotRepository.insertPlantpot(plantpot);
 };
 
-exports.updatePlantpot = async (user, plant, plantpotId) => {
+exports.updatePlantpot = async (plantpotId) => {
   const plantpot = plantpotRepository.findPlantpotById(plantpotId);
-  plantpot.UserId = user.id;
-  plantpot.PlantId = plant.id;
+  // plantpot.userId = user.userId;
+  // plantpot.plantId = plant.plantId;
   await plantpotRepository.updatePlantpot(plantpot);
 };
 
-exports.deletePlantpot = async (user, plant, plantpotId) => {
+exports.deletePlantpot = async (plantpotId) => {
   const plantpot = plantpotRepository.findPlantpotById(plantpotId);
-  plantpot.UserId = user.id;
-  plantpot.PlantId = plant.id;
+  // plantpot.userId = user.userId;
+  // plantpot.plantId = plant.plantId;
   await plantpotRepository.deletePlantpot(plantpot);
 };

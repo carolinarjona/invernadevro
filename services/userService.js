@@ -27,8 +27,8 @@ exports.login = async (email, password) => {
   return token;
 };
 
-exports.getProfile = async (email) => {
-  const user = await userRepository.findUserByEmail(email);
+exports.getProfile = async (userId) => {
+  const user = await userRepository.findUserById(userId);
   return user.toJSON();
 };
 
@@ -36,8 +36,8 @@ exports.getAllProfiles = async () => {
   return await userRepository.findAllUsers();
 };
 
-exports.editProfile = async (id, userDetails) => {
-  await userRepository.updateUser(id, userDetails);
+exports.editProfile = async (userId, userDetails) => {
+  await userRepository.updateUser(userDetails, { where: { userId } });
 };
 
 exports.deleteUserById = async (id) => {

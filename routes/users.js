@@ -1,9 +1,63 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const userService = require("../services/userService");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/all", async (req, res) => {
+  try {
+    const users = await userService.getAllProfiles();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userService.getProfile(id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.post("/signup", async (req, res) => {
+  try {
+    await userService.signup(req.body);
+    res.sendStatus(201);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userService.login(email, password);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.put("/", async (req, res) => {
+  try {
+    const { userId } = req.body;
+    await userService.editProfile(userId, req.body);
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.delete("/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    await userService.deleteUserById(userId);
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 module.exports = router;
