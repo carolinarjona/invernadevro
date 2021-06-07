@@ -6,12 +6,14 @@ const Plantpot = require("../models/Plantpot");
 const loadModels = () => {
   User.belongsToMany(Plant, {
     through: Plantpot,
-    foreignKey: "userId",
   }),
     Plant.belongsToMany(User, {
       through: Plantpot,
-      foreignKey: "plantId",
     });
+  Plantpot.belongsTo(User);
+  Plantpot.belongsTo(Plant);
+  User.hasMany(Plantpot);
+  Plant.hasMany(Plantpot);
 
   dbInvernadevro
     .sync({ force: true })

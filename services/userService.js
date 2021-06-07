@@ -30,7 +30,7 @@ exports.login = async (email, password) => {
     throw new HttpError(400, "Your password is incorrect!");
   }
 
-  const token = generateToken(user.id, user.email, user.role);
+  const token = generateToken(user.userId, user.email, user.role);
   return token;
 };
 
@@ -44,10 +44,10 @@ exports.getAllProfiles = async () => {
   return await userRepository.findAllUsers();
 };
 
-exports.editProfile = async (userId, userDetails) => {
-  if (!userId) throw new HttpError(400, "That user doens't exist!");
+exports.editProfile = async ({ id }, userDetails) => {
+  if (!id) throw new HttpError(400, "That user doens't exist!");
   await updateUserSchema.validateAsync(userDetails);
-  await userRepository.updateUser(userDetails, { where: { userId } });
+  await userRepository.updateUser(userDetails, { where: { userId: id } });
 };
 
 exports.deleteUserById = async (userId) => {

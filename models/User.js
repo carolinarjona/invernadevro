@@ -5,7 +5,7 @@ const { ROLE } = require("../util/constants");
 const User = dbInvernadevro.define(
   "User",
   {
-    userId: {
+    id: {
       primaryKey: true,
       allowNull: false,
       type: DataTypes.UUID,
@@ -15,7 +15,7 @@ const User = dbInvernadevro.define(
       type: DataTypes.STRING(25),
     },
     password: {
-      type: DataTypes.STRING(35),
+      type: DataTypes.STRING(),
     },
     username: {
       type: DataTypes.STRING(35),

@@ -43,8 +43,7 @@ router.post("/login", async (req, res) => {
 
 router.put("/", roleValidation("user"), async (req, res) => {
   try {
-    const { userId } = req.body;
-    await userService.editProfile(userId, req.body, req.user);
+    await userService.editProfile(req.user, req.body);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

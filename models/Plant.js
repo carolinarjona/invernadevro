@@ -5,7 +5,7 @@ const { DIFFICULTY } = require("../util/constants");
 const { WATERING_FREQUENCY } = require("../util/constants");
 
 const Plant = dbInvernadevro.define("Plant", {
-  plantId: {
+  id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
