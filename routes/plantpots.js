@@ -34,7 +34,7 @@ router.post("/", roleValidation("user"), async (req, res, next) => {
 router.delete("/:id", roleValidation("user"), async (req, res) => {
   try {
     const { id } = req.params;
-    await plantpotService.deletePlantpot(req.user, id);
+    await plantpotService.deletePlantpot(id, req.user);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -44,7 +44,7 @@ router.delete("/:id", roleValidation("user"), async (req, res) => {
 router.put("/:id", roleValidation("user"), async (req, res) => {
   try {
     const { id } = req.params;
-    await plantpotService.updatePlantpot(id, req, user, req.body);
+    await plantpotService.updatePlantpot(id, req.user, req.body);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

@@ -50,10 +50,10 @@ router.put("/", roleValidation("user"), async (req, res) => {
   }
 });
 
-router.delete("/:userId", roleValidation("user"), async (req, res) => {
+router.delete("/:id", roleValidation("user"), async (req, res) => {
   try {
-    const { userId } = req.params;
-    await userService.deleteUserById(userId, req.user);
+    const { id } = req.params;
+    await userService.deleteUserById(id, req.user);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

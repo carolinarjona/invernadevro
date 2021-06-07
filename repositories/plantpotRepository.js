@@ -23,11 +23,11 @@ const plantUserInfo = {
 };
 
 exports.findAllPlantpots = async () => {
-  return await Plantpot.findAll(plantUserInfo);
+  return await Plantpot.findAll();
 };
 
 exports.findPlantpotById = async (id) => {
-  return await Plantpot.findByPk(id, plantUserInfo);
+  return await Plantpot.findByPk(id);
 };
 
 exports.insertPlantpot = async (plantpot) => {

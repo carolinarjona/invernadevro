@@ -4,8 +4,8 @@ exports.findAllUsers = async () => {
   return await User.findAll();
 };
 
-exports.findUserById = async (userId) => {
-  return await User.findOne({ where: { userId } });
+exports.findUserById = async (id) => {
+  return await User.findOne({ where: { id } });
 };
 
 exports.findUserWithPasswordByEmail = async (email) => {
@@ -16,10 +16,10 @@ exports.insertUser = async (user) => {
   return await User.create(user);
 };
 
-exports.updateUser = async (userId, userDetails) => {
-  return await User.update(userId, userDetails);
+exports.updateUser = async (id, userDetails) => {
+  return await User.update(id, userDetails);
 };
 
-exports.deleteUser = async (userId) => {
-  return await User.destroy({ where: { userId } });
+exports.deleteUser = async (id) => {
+  return await User.destroy({ where: { id } });
 };

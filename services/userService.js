@@ -30,13 +30,13 @@ exports.login = async (email, password) => {
     throw new HttpError(400, "Your password is incorrect!");
   }
 
-  const token = generateToken(user.userId, user.email, user.role);
+  const token = generateToken(user.id, user.email, user.role);
   return token;
 };
 
-exports.getProfile = async (userId) => {
-  if (!userId) throw new HttpError(400, "That user doens't exist!");
-  const user = await userRepository.findUserById(userId);
+exports.getProfile = async (id) => {
+  if (!id) throw new HttpError(400, "That user doens't exist!");
+  const user = await userRepository.findUserById(id);
   return user.toJSON();
 };
 
@@ -47,10 +47,10 @@ exports.getAllProfiles = async () => {
 exports.editProfile = async ({ id }, userDetails) => {
   if (!id) throw new HttpError(400, "That user doens't exist!");
   await updateUserSchema.validateAsync(userDetails);
-  await userRepository.updateUser(userDetails, { where: { userId: id } });
+  await userRepository.updateUser(userDetails, { where: { id } });
 };
 
-exports.deleteUserById = async (userId) => {
-  if (!userId) throw new HttpError(400, "That user doesn't exist!");
-  await userRepository.deleteUser(userId);
+exports.deleteUserById = async (id) => {
+  if (!id) throw new HttpError(400, "That user doesn't exist!");
+  await userRepository.deleteUser(id);
 };
