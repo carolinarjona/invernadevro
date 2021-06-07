@@ -6,10 +6,10 @@ const { WATERING_FREQUENCY } = require("../util/constants");
 
 const Plant = dbInvernadevro.define("Plant", {
   plantId: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true,
     allowNull: false,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
   },
   name: {
     type: DataTypes.STRING(60),

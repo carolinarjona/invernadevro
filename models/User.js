@@ -15,7 +15,7 @@ const User = dbInvernadevro.define(
       type: DataTypes.STRING(25),
     },
     password: {
-      type: DataTypes.STRING(64),
+      type: DataTypes.STRING(35),
     },
     username: {
       type: DataTypes.STRING(35),

@@ -1,4 +1,5 @@
 var express = require("express");
+const roleValidation = require("../middleware/roleValidation");
 var router = express.Router();
 const plantService = require("../services/plantService");
 
@@ -21,29 +22,29 @@ router.get("/:plantId", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", roleValidation("admin"), async (req, res, next) => {
   try {
-    await plantService.createPlant(req.body);
+    await plantService.createPlant(req.body, req.user);
     res.sendStatus(201);
   } catch (error) {
     next(error);
   }
 });
 
-router.delete("/:plantId", async (req, res) => {
+router.delete("/:plantId", roleValidation("admin"), async (req, res) => {
   try {
     const { plantId } = req.params;
-    await plantService.deletePlant(plantId);
+    await plantService.deletePlant(plantId, req.user);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", roleValidation("admin"), async (req, res) => {
   try {
     const { plantId } = req.body;
-    await plantService.editPlant(plantId, req.body);
+    await plantService.editPlant(plantId, req.body, req.user);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

@@ -1,26 +1,33 @@
 const userRepository = require("../repositories/userRepository");
 const encryptPass = require("../util/encryptPass");
 const { generateToken } = require("../services/jwtService");
+const {
+  insertUserSchema,
+  updateUserSchema,
+} = require("../validations/userValidation");
+const HttpError = require("../util/httpError");
 
 exports.signup = async (userDetails) => {
-  if (!userDetails.password || !userDetails.email) {
-    throw new Error("You forgot enter email or password!");
-  }
-  userDetails.password = await encryptPass(userDetails.password);
-  await userRepository.insertUser(userDetails);
+  const validationUser = await insertUserSchema.validateAsync(userDetails);
+  const encryptedPassword = await encryptPass(userDetails.password);
+
+  await userRepository.insertUser({
+    ...validationUser,
+    password: encryptedPassword,
+  });
 };
 
 exports.login = async (email, password) => {
   if (!email || !password) {
-    throw new Error("You forgot enter email or password!");
+    throw new HttpError(400, "You forgot enter email or password!");
   }
 
   const user = await userRepository.findUserWithPasswordByEmail(email);
-  if (!user) throw new Error("That user doens't exist!");
+  if (!user) throw new HttpError(400, "That user doens't exist!");
 
   const encryptedPassword = await encryptPass(password);
   if (user.password !== encryptedPassword) {
-    throw new Error("Your password is incorrect!");
+    throw new HttpError(400, "Your password is incorrect!");
   }
 
   const token = generateToken(user.id, user.email, user.role);
@@ -28,6 +35,7 @@ exports.login = async (email, password) => {
 };
 
 exports.getProfile = async (userId) => {
+  if (!userId) throw new HttpError(400, "That user doens't exist!");
   const user = await userRepository.findUserById(userId);
   return user.toJSON();
 };
@@ -37,9 +45,12 @@ exports.getAllProfiles = async () => {
 };
 
 exports.editProfile = async (userId, userDetails) => {
+  if (!userId) throw new HttpError(400, "That user doens't exist!");
+  await updateUserSchema.validateAsync(userDetails);
   await userRepository.updateUser(userDetails, { where: { userId } });
 };
 
-exports.deleteUserById = async (id) => {
-  await userRepository.deleteUser(id);
+exports.deleteUserById = async (userId) => {
+  if (!userId) throw new HttpError(400, "That user doesn't exist!");
+  await userRepository.deleteUser(userId);
 };

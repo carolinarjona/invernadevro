@@ -1,49 +1,50 @@
 var express = require("express");
+const roleValidation = require("../middleware/roleValidation");
 var router = express.Router();
 const plantpotService = require("../services/plantpotService");
 
-router.get("/all", async (req, res, next) => {
+router.get("/all", roleValidation("user"), async (req, res, next) => {
   try {
-    const plantpots = await plantpotService.getAllPlantpots();
+    const plantpots = await plantpotService.getAllPlantpots(req.user);
     res.status(200).json(plantpots);
   } catch (error) {
     next(error);
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", roleValidation("user"), async (req, res, next) => {
   try {
     const { id } = req.params;
-    const plantpot = await plantpotService.getPlantpotById(id);
+    const plantpot = await plantpotService.getPlantpotById(id, req.user);
     res.status(200).json(plantpot);
   } catch (error) {
     next(error);
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", roleValidation("user"), async (req, res, next) => {
   try {
-    await plantpotService.createPlantpot(req.body);
+    await plantpotService.createPlantpot(req.user, req.body);
     res.sendStatus(201);
   } catch (error) {
     next(error);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", roleValidation("user"), async (req, res) => {
   try {
     const { id } = req.params;
-    await plantpotService.deletePlantpot(id);
+    await plantpotService.deletePlantpot(req.user, id);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", roleValidation("user"), async (req, res) => {
   try {
     const { id } = req.params;
-    await plantpotService.updatePlantpot(id, req.body);
+    await plantpotService.updatePlantpot(id, req, user, req.body);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

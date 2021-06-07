@@ -1,20 +1,21 @@
 var express = require("express");
+const roleValidation = require("../middleware/roleValidation");
 var router = express.Router();
 const userService = require("../services/userService");
 
-router.get("/all", async (req, res) => {
+router.get("/all", roleValidation("user"), async (req, res) => {
   try {
-    const users = await userService.getAllProfiles();
+    const users = await userService.getAllProfiles(req.user);
     res.status(200).json(users);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", roleValidation("user"), async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await userService.getProfile(id);
+    const user = await userService.getProfile(id, req.user);
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -40,20 +41,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
+router.put("/", roleValidation("user"), async (req, res) => {
   try {
     const { userId } = req.body;
-    await userService.editProfile(userId, req.body);
+    await userService.editProfile(userId, req.body, req.user);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-router.delete("/:userId", async (req, res) => {
+router.delete("/:userId", roleValidation("user"), async (req, res) => {
   try {
     const { userId } = req.params;
-    await userService.deleteUserById(userId);
+    await userService.deleteUserById(userId, req.user);
     res.sendStatus(204);
   } catch (error) {
     res.status(400).json({ message: error.message });

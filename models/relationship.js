@@ -13,7 +13,9 @@ const loadModels = () => {
       foreignKey: "plantId",
     });
 
-  dbInvernadevro.sync().then(() => console.log("🌻 Everything is ok! 🌻"));
+  dbInvernadevro
+    .sync({ force: true })
+    .then(() => console.log("🌻 Everything is ok! 🌻"));
 };
 
 module.exports = loadModels;
