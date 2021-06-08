@@ -3,6 +3,15 @@ exports.ROLE = Object.freeze({
   ADMIN: "admin",
 });
 
+exports.ERRORS = Object.freeze({
+  NO_PLANT: "That plant doesn't exist!",
+  CANT_DO: "You can't do that!",
+  NO_USER: "That user doesn't exist!",
+  INCORRECT_PASS: "Your password is incorrect!",
+  EMAIL_PASS: "You forgot enter email or password!",
+  NO_PLANTPOT: "That plantpot doesn' exist!",
+});
+
 exports.LIGHT_LEVEL = Object.freeze({
   TBD: "TBD",
   LOW: "low",

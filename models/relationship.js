@@ -5,8 +5,9 @@ const Plantpot = require("../models/Plantpot");
 
 const loadModels = () => {
   Plantpot.belongsTo(User);
-  Plant.hasMany(Plantpot);
+  Plantpot.belongsTo(Plant);
   User.hasMany(Plantpot);
+  Plant.hasMany(Plantpot);
 
   dbInvernadevro.sync().then(() => console.log("🌻 Everything is ok! 🌻"));
 };

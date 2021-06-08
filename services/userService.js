@@ -6,6 +6,7 @@ const {
   updateUserSchema,
 } = require("../validations/userValidation");
 const HttpError = require("../util/httpError");
+const { ERRORS } = require("../util/constants");
 
 exports.signup = async (userDetails) => {
   const validationUser = await insertUserSchema.validateAsync(userDetails);
@@ -19,15 +20,15 @@ exports.signup = async (userDetails) => {
 
 exports.login = async (email, password) => {
   if (!email || !password) {
-    throw new HttpError(400, "You forgot enter email or password!");
+    throw new HttpError(400, ERRORS.EMAIL_PASS);
   }
 
   const user = await userRepository.findUserWithPasswordByEmail(email);
-  if (!user) throw new HttpError(400, "That user doens't exist!");
+  if (!user) throw new HttpError(404, ERRORS.NO_USER);
 
   const encryptedPassword = await encryptPass(password);
   if (user.password !== encryptedPassword) {
-    throw new HttpError(400, "Your password is incorrect!");
+    throw new HttpError(400, ERRORS.INCORRECT_PASS);
   }
 
   const token = generateToken(user.id, user.email, user.role);
@@ -35,7 +36,7 @@ exports.login = async (email, password) => {
 };
 
 exports.getProfile = async (id) => {
-  if (!id) throw new HttpError(400, "That user doens't exist!");
+  if (!id) throw new HttpError(404, ERRORS.NO_USER);
   const user = await userRepository.findUserById(id);
   return user.toJSON();
 };
@@ -45,12 +46,12 @@ exports.getAllProfiles = async () => {
 };
 
 exports.editProfile = async ({ id }, userDetails) => {
-  if (!id) throw new HttpError(400, "That user doens't exist!");
+  if (!id) throw new HttpError(404, ERRORS.NO_USER);
   await updateUserSchema.validateAsync(userDetails);
   await userRepository.updateUser(userDetails, { where: { id } });
 };
 
 exports.deleteUserById = async (id) => {
-  if (!id) throw new HttpError(400, "That user doesn't exist!");
+  if (!id) throw new HttpError(404, ERRORS.NO_USER);
   await userRepository.deleteUser(id);
 };

@@ -8,7 +8,7 @@ router.get("/all", roleValidation("user"), async (req, res) => {
     const users = await userService.getAllProfiles(req.user);
     res.status(200).json(users);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -18,7 +18,7 @@ router.get("/:id", roleValidation("user"), async (req, res) => {
     const user = await userService.getProfile(id, req.user);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
     await userService.signup(req.body);
     res.sendStatus(201);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
     const user = await userService.login(email, password);
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -46,7 +46,7 @@ router.put("/", roleValidation("user"), async (req, res) => {
     await userService.editProfile(req.user, req.body);
     res.sendStatus(204);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 
@@ -56,7 +56,7 @@ router.delete("/:id", roleValidation("user"), async (req, res) => {
     await userService.deleteUserById(id, req.user);
     res.sendStatus(204);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    next(error);
   }
 });
 

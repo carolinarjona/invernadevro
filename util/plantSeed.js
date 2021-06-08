@@ -272,4 +272,6 @@ const plants = [
   },
 ];
 
-Plant.bulkCreate(plants).then(() => console.log("data inserted"));
+Plant.bulkCreate(plants).then(() =>
+  console.log("🌱 Your plants are loaded 🌱")
+);

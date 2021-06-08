@@ -1,8 +1,10 @@
 const { DataTypes } = require("sequelize");
 const dbInvernadevro = require("../config/dbInvernadevro");
-const { LIGHT_LEVEL } = require("../util/constants");
-const { DIFFICULTY } = require("../util/constants");
-const { WATERING_FREQUENCY } = require("../util/constants");
+const {
+  LIGHT_LEVEL,
+  DIFFICULTY,
+  WATERING_FREQUENCY,
+} = require("../util/constants");
 
 const Plant = dbInvernadevro.define("Plant", {
   id: {
