@@ -51,7 +51,8 @@ exports.editProfile = async ({ id }, userDetails) => {
   await userRepository.updateUser(userDetails, { where: { id } });
 };
 
-exports.deleteUserById = async (id) => {
+exports.deleteUserById = async (id, user) => {
   if (!id) throw new HttpError(404, ERRORS.NO_USER);
+  if (id !== user.id) throw new HttpError(401, ERRORS.CANT_DO);
   await userRepository.deleteUser(id);
 };

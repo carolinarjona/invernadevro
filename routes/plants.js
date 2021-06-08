@@ -31,7 +31,7 @@ router.post("/", roleValidation("admin"), async (req, res, next) => {
   }
 });
 
-router.delete("/:id", roleValidation("admin"), async (req, res) => {
+router.delete("/:id", roleValidation("admin"), async (req, res, next) => {
   try {
     const { id } = req.params;
     await plantService.deletePlant(id, req.user);
@@ -41,7 +41,7 @@ router.delete("/:id", roleValidation("admin"), async (req, res) => {
   }
 });
 
-router.put("/:id", roleValidation("admin"), async (req, res) => {
+router.put("/:id", roleValidation("admin"), async (req, res, next) => {
   try {
     const { id } = req.params;
     await plantService.editPlant(id, req.user, req.body);

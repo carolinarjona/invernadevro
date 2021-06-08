@@ -31,7 +31,7 @@ router.post("/", roleValidation("user"), async (req, res, next) => {
   }
 });
 
-router.delete("/:id", roleValidation("user"), async (req, res) => {
+router.delete("/:id", roleValidation("user"), async (req, res, next) => {
   try {
     const { id } = req.params;
     await plantpotService.deletePlantpot(id, req.user);
@@ -41,7 +41,7 @@ router.delete("/:id", roleValidation("user"), async (req, res) => {
   }
 });
 
-router.put("/:id", roleValidation("user"), async (req, res) => {
+router.put("/:id", roleValidation("user"), async (req, res, next) => {
   try {
     const { id } = req.params;
     await plantpotService.updatePlantpot(id, req.user, req.body);

@@ -3,7 +3,7 @@ const roleValidation = require("../middleware/roleValidation");
 var router = express.Router();
 const userService = require("../services/userService");
 
-router.get("/all", roleValidation("user"), async (req, res) => {
+router.get("/all", roleValidation("user"), async (req, res, next) => {
   try {
     const users = await userService.getAllProfiles(req.user);
     res.status(200).json(users);
@@ -12,7 +12,7 @@ router.get("/all", roleValidation("user"), async (req, res) => {
   }
 });
 
-router.get("/:id", roleValidation("user"), async (req, res) => {
+router.get("/:id", roleValidation("user"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await userService.getProfile(id, req.user);
@@ -22,7 +22,7 @@ router.get("/:id", roleValidation("user"), async (req, res) => {
   }
 });
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res, next) => {
   try {
     await userService.signup(req.body);
     res.sendStatus(201);
@@ -31,7 +31,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await userService.login(email, password);
@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.put("/", roleValidation("user"), async (req, res) => {
+router.put("/", roleValidation("user"), async (req, res, next) => {
   try {
     await userService.editProfile(req.user, req.body);
     res.sendStatus(204);
@@ -50,7 +50,7 @@ router.put("/", roleValidation("user"), async (req, res) => {
   }
 });
 
-router.delete("/:id", roleValidation("user"), async (req, res) => {
+router.delete("/:id", roleValidation("user"), async (req, res, next) => {
   try {
     const { id } = req.params;
     await userService.deleteUserById(id, req.user);
