@@ -30,8 +30,7 @@ Encontrarás el archivo `env.template` con las variables de entorno necesarias p
 - **util** ➤ Contiene los archivos necesarios para que nuestro proyecto funcione mejor y correctamente: `checkOwnership.js` comprueba si el usuario es el autor de lo que ha creado o si el rol le da los permisos para hacer ciertos cambios, el archivo `constants.js` contiene las constantes que usaremos para nuestro proyecto y que nos ayudarán, en algunos casos, a refactorizar, `encryptPass.js` contiene la lógica con la librería *crypto* para encriptar las contraseñas, `httpError.js` nos deja personalizar los errores y el `plantSeed.js` contiene la *seed* que nos dejará cargar campos predefinidos a nuestro modelo *Plant*.
 - **validations** ➤ Contiene los archivos que validan los datos que introducimos para crear o editar campos de nuestras entidades. Gracias a la librería *Joi*, creamos las validaciones `plantpotValidation.js`, `plantValidation.js` y `userValidation.js`.
 - **env.template** ➤ Contiene las variables de entorno necesarias para que el proyecto funcione.
-- **app.js** ➤ Contiene las llamadas a funciones, middlewares y rutas necesarias para que el proyecto funcione.
-<<<<<<< HEAD
+- **app.js** ➤ Contiene las llamadas a funciones, middlewares y rutas necesarias para que el proyecto funcione. 
 ## **🌾 Endpoints**
 - **User**
     - **get** (/all) ➤ roleValidation: user
@@ -52,8 +51,6 @@ Encontrarás el archivo `env.template` con las variables de entorno necesarias p
     - **post** (/) ➤ roleValidation: user (ownership)
     - **put** (/:id) ➤ roleValidation: user (ownership)
     - **delete** (/:id) ➤ roleValidation: user (ownership)
-=======
->>>>>>> f4697fca0e729f4c28cbbc39a0e5646c76b959e2
 ## **🌷 Relaciones**
 Un **user** registra sus **plantpot** indicando qué **plant** hay en cada una de ellas. Un **user** puede tener muchas **plantpot**.
 ![Relaciones user-plantpots-plants](https://res.cloudinary.com/carolveloper/image/upload/v1623142829/Invernadevro-Plant/userplantpotplant_fgi2uh.png)
